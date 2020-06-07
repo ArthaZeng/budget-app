@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { RectButton, ScrollView } from "react-native-gesture-handler";
 
 export default function ItemsScreen() {
@@ -10,15 +10,20 @@ export default function ItemsScreen() {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
+      <View style={styles.fixToText}>
+        <Button title="Spend" onPress={() => {}} />
+        <Button title="Gain" onPress={() => {}} />
+      </View>
+
       <OptionButton
-        icon="md-school"
-        label="Read the Expo documentation"
+        icon="md-add"
+        label="Category1"
         onPress={() => WebBrowser.openBrowserAsync("https://docs.expo.io")}
       />
 
       <OptionButton
-        icon="md-compass"
-        label="Read the React Navigation documentation"
+        icon="md-remove"
+        label="Category2"
         onPress={() =>
           WebBrowser.openBrowserAsync("https://reactnavigation.org")}
       />
@@ -74,6 +79,10 @@ const styles = StyleSheet.create({
   },
   lastOption: {
     borderBottomWidth: StyleSheet.hairlineWidth
+  },
+  fixToText: {
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
   optionText: {
     fontSize: 15,

@@ -41,6 +41,14 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-list-box" />,
         }}
       />
+      <BottomTab.Screen
+        name="setting"
+        component={ToBuyScreen}
+        options={{
+          title: 'Setting',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-settings" />,
+        }}
+      />
     </BottomTab.Navigator>
   );
 }
@@ -50,10 +58,12 @@ function getHeaderTitle(route) {
 
   switch (routeName) {
     case 'overview':
-      return 'How to get started';
+      return 'Overview';
     case 'items':
-      return 'Links to learn more';
+      return 'Expense';
     case 'tobuy':
-      return 'Links to learn more';
+      return 'To Buy List';
+    case 'setting':
+      return 'Setting';
   }
 }
