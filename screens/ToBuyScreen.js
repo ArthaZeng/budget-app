@@ -5,10 +5,9 @@ import { useAsyncStorage } from "@react-native-community/async-storage";
 import { SwipeListView } from "react-native-swipe-list-view";
 
 const KEY = "@to_buy_items";
-// TODO: reflect the items after adding and removing
 
 export default function ToBuyScreen() {
-  const [items, setItems] = useState(["item 1"]);
+  const [items, setItems] = useState();
   const [text, setText] = useState("");
 
   const { getItem, setItem, removeItem } = useAsyncStorage(KEY);
@@ -17,18 +16,24 @@ export default function ToBuyScreen() {
     const items = await getItem();
     if (items) {
       setItems(items.split(","));
+    } else {
+      setItems([]);
     }
   };
 
   const writeItemToStorage = async newValue => {
+    if (newValue.trim() === "") {
+      return;
+    }
     const items = await getItem();
     if (items) {
       const itemsArr = items.split(",");
       itemsArr.push(newValue);
       await setItem(itemsArr.join());
+      setItems(itemsArr);
     } else {
       await setItem(newValue);
-      setItems(newValue);
+      setItems([newValue]);
     }
   };
 
@@ -38,6 +43,7 @@ export default function ToBuyScreen() {
     const index = itemsArr.indexOf(value);
     itemsArr.splice(index, 1);
     await setItem(itemsArr.join());
+    setItems(itemsArr);
   };
 
   const clearAll = async () => {
@@ -64,7 +70,7 @@ export default function ToBuyScreen() {
           title="Add"
           onPress={() => {
             writeItemToStorage(text);
-            readItemFromStorage();
+            setText("");
           }}
         />
       </View>
@@ -96,13 +102,6 @@ export default function ToBuyScreen() {
     </ScrollView>
   );
 }
-
-const Item = ({ label }) =>
-  <View style={{ flexDirection: "row" }}>
-    <Text style={styles.optionText}>
-      {label}
-    </Text>
-  </View>;
 
 const styles = StyleSheet.create({
   container: {
