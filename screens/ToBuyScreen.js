@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useAsyncStorage } from "@react-native-community/async-storage";
+import { SwipeListView } from "react-native-swipe-list-view";
 
 const KEY = "@to_buy_items";
+// TODO: reflect the items after adding and removing
 
 export default function ToBuyScreen() {
   const [items, setItems] = useState(["item 1"]);
@@ -30,14 +32,16 @@ export default function ToBuyScreen() {
     }
   };
 
-  const clearAll = async () => {
-    // why this function is not working?
-    try {
-      await removeItem();
-    } catch (e) {
-      // clear error
-    }
+  const removeItemInStorage = async value => {
+    const items = await getItem();
+    const itemsArr = items.split(",");
+    const index = itemsArr.indexOf(value);
+    itemsArr.splice(index, 1);
+    await setItem(itemsArr.join());
+  };
 
+  const clearAll = async () => {
+    await setItem("");
     console.log("Done.");
   };
 
@@ -64,7 +68,30 @@ export default function ToBuyScreen() {
           }}
         />
       </View>
-      {items.map(val => <Item key={val} label={val} />)}
+      <SwipeListView
+        data={items}
+        key="swipe-list"
+        renderItem={(data, rowMap) =>
+          <View key={data.item} style={styles.rowFront}>
+            <View>
+              <Text>
+                {data.item}
+              </Text>
+            </View>
+          </View>}
+        renderHiddenItem={(data, rowMap) =>
+          <View style={{ width: "75px" }}>
+            <Button
+              title="delete"
+              key={`delete-${data.item}`}
+              onPress={() => {
+                console.log("delete", data.item);
+                removeItemInStorage(data.item);
+              }}
+            />
+          </View>}
+        leftOpenValue={75}
+      />
       <Button title="Clear all" onPress={clearAll} />
     </ScrollView>
   );
@@ -86,5 +113,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     alignSelf: "flex-start",
     marginTop: 1
+  },
+  rowFront: {
+    backgroundColor: "white",
+    height: "40px"
   }
 });
