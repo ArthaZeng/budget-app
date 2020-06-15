@@ -1,70 +1,49 @@
-import { Ionicons } from "@expo/vector-icons";
-import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { RectButton, ScrollView } from "react-native-gesture-handler";
+import { CATEGORIES } from "./constants";
 
-export default function ItemsScreen() {
+const OptionButton = ({ label, onPress }) => {
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-    >
-      <View style={styles.fixToText}>
-        <Button title="Spend" onPress={() => {}} />
-        <Button title="Gain" onPress={() => {}} />
-      </View>
-
-      <OptionButton
-        icon="md-add"
-        label="Category1"
-        onPress={() => WebBrowser.openBrowserAsync("https://docs.expo.io")}
-      />
-
-      <OptionButton
-        icon="md-remove"
-        label="Category2"
-        onPress={() =>
-          WebBrowser.openBrowserAsync("https://reactnavigation.org")}
-      />
-
-      <OptionButton
-        icon="ios-chatboxes"
-        label="Ask a question on the forums"
-        onPress={() => WebBrowser.openBrowserAsync("https://forums.expo.io")}
-        isLastOption
-      />
-    </ScrollView>
-  );
-}
-
-function OptionButton({ icon, label, onPress, isLastOption }) {
-  return (
-    <RectButton
-      style={[styles.option, isLastOption && styles.lastOption]}
-      onPress={onPress}
-    >
+    <RectButton style={styles.option} onPress={onPress}>
       <View style={{ flexDirection: "row" }}>
-        <View style={styles.optionIconContainer}>
-          <Ionicons name={icon} size={22} color="rgba(0,0,0,0.35)" />
-        </View>
-        <View style={styles.optionTextContainer}>
-          <Text style={styles.optionText}>
-            {label}
-          </Text>
-        </View>
+        <Text style={styles.optionText}>
+          {label}
+        </Text>
       </View>
     </RectButton>
   );
-}
+};
+
+const ItemsScreen = ({ navigation }) => {
+  console.log(navigation);
+  return (
+    <ScrollView style={styles.container}>
+      <View style={styles.fixToText}>
+        <Button
+          title="Spend"
+          onPress={() => navigation.navigate("ItemModal")}
+        />
+        <Button title="Gain" onPress={() => navigation.navigate("ItemModal")} />
+      </View>
+      {Object.entries(CATEGORIES).map(entry => {
+        console.log(entry);
+        return (
+          <OptionButton
+            key={entry[1].label}
+            label={entry[1].label}
+            onPress={entry => navigation.navigate("Category")}
+          />
+        );
+      })}
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fafafa"
-  },
-  contentContainer: {
-    paddingTop: 15
   },
   optionIconContainer: {
     marginRight: 12
@@ -90,3 +69,5 @@ const styles = StyleSheet.create({
     marginTop: 1
   }
 });
+
+export default ItemsScreen;

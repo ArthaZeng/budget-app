@@ -5,6 +5,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import ItemScreen from '../screens/ItemsScreen';
 import ToBuyScreen from '../screens/ToBuyScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Overview';
@@ -43,9 +44,9 @@ export default function BottomTabNavigator({ navigation, route }) {
       />
       <BottomTab.Screen
         name="setting"
-        component={ToBuyScreen}
+        component={SettingsScreen}
         options={{
-          title: 'Setting',
+          title: 'Settings',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-settings" />,
         }}
       />
@@ -64,6 +65,6 @@ function getHeaderTitle(route) {
     case 'tobuy':
       return 'To Buy List';
     case 'setting':
-      return 'Setting';
+      return 'Settings';
   }
 }

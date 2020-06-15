@@ -3,14 +3,13 @@ import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useAsyncStorage } from "@react-native-community/async-storage";
 import { SwipeListView } from "react-native-swipe-list-view";
-
-const KEY = "@to_buy_items";
+import { TO_BUY_KEY } from "./constants";
 
 export default function ToBuyScreen() {
   const [items, setItems] = useState();
   const [text, setText] = useState("");
 
-  const { getItem, setItem, removeItem } = useAsyncStorage(KEY);
+  const { getItem, setItem, removeItem } = useAsyncStorage(TO_BUY_KEY);
 
   const readItemFromStorage = async () => {
     const items = await getItem();
