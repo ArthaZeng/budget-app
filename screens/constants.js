@@ -1,39 +1,43 @@
 export const TO_BUY_KEY = "@to_buy_items";
 export const CATEGORIES = {
   fixedCharge: {
-    key: "@",
+    key: "@fixedcharge",
     label: "Fixed Charge"
   },
+  dailyExpense: {
+    key: "@dailyexpense",
+    label: "Daily Expense"
+  },
   studyInvest: {
-    key: "@",
+    key: "@studyinvest",
     label: "Investment"
   },
   clothes: {
-    key: "@",
+    key: "@clothes",
     label: "Clothes"
   },
   entertainment: {
-    key: "@",
+    key: "@entertainment",
     label: "Entertainment"
   },
   personalTies: {
-    key: "@",
+    key: "@personalties",
     label: "Personal Ties"
   },
   bigItem: {
-    key: "@",
+    key: "@bigitem",
     label: "Big Item"
   },
   reimbursement: {
-    key: "@",
+    key: "@reimbursement",
     label: "Reimbursement"
   },
   salary: {
-    key: "@",
+    key: "@salary",
     label: "Salary"
   },
   otherIncome: {
-    key: "@",
+    key: "@otherincome",
     label: "Other Income"
   }
 };

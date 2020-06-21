@@ -24,7 +24,7 @@ export default function App(props) {
           <Stack.Navigator>
             <Stack.Screen name="Root" component={BottomTabNavigator} />
             <Stack.Screen name="Category" component={CategoryScreen} />
-            <Stack.Screen name="ItemModal" component={ItemModal} />
+            <Stack.Screen name="New" component={ItemModal} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

@@ -6,11 +6,27 @@ import HomeScreen from '../screens/HomeScreen';
 import ItemScreen from '../screens/ItemsScreen';
 import ToBuyScreen from '../screens/ToBuyScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+// import ExpensePageNavigator from './ExpensePageNavigator';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Overview';
 
-export default function BottomTabNavigator({ navigation, route }) {
+const getHeaderTitle = (route) => {
+  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
+
+  switch (routeName) {
+    case 'overview':
+      return 'Overview';
+    case 'items':
+      return 'Items';
+    case 'tobuy':
+      return 'To Buy List';
+    case 'setting':
+      return 'Settings';
+  }
+};
+
+const BottomTabNavigator = ({ navigation, route }) =>  {
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
@@ -52,19 +68,6 @@ export default function BottomTabNavigator({ navigation, route }) {
       />
     </BottomTab.Navigator>
   );
-}
+};
 
-function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
-
-  switch (routeName) {
-    case 'overview':
-      return 'Overview';
-    case 'items':
-      return 'Expense';
-    case 'tobuy':
-      return 'To Buy List';
-    case 'setting':
-      return 'Settings';
-  }
-}
+export default BottomTabNavigator;

@@ -6,17 +6,17 @@ import { SwipeListView } from "react-native-swipe-list-view";
 import { TO_BUY_KEY } from "./constants";
 
 export default function ToBuyScreen() {
-  const [items, setItems] = useState();
+  const [items, setItemsState] = useState();
   const [text, setText] = useState("");
 
-  const { getItem, setItem, removeItem } = useAsyncStorage(TO_BUY_KEY);
+  const { getItem, setItem } = useAsyncStorage(TO_BUY_KEY);
 
   const readItemFromStorage = async () => {
     const items = await getItem();
     if (items) {
-      setItems(items.split(","));
+      setItemsState(JSON.parse(items));
     } else {
-      setItems([]);
+      setItemsState([]);
     }
   };
 
@@ -26,33 +26,37 @@ export default function ToBuyScreen() {
     }
     const items = await getItem();
     if (items) {
-      const itemsArr = items.split(",");
+      const itemsArr = JSON.parse(items);
+      console.log("write items", items);
       itemsArr.push(newValue);
-      await setItem(itemsArr.join());
-      setItems(itemsArr);
+      await setItem(JSON.stringify(itemsArr));
+      setItemsState(itemsArr);
     } else {
-      await setItem(newValue);
-      setItems([newValue]);
+      await setItem(JSON.stringify([newValue]));
+      setItemsState([newValue]);
     }
   };
 
   const removeItemInStorage = async value => {
     const items = await getItem();
-    const itemsArr = items.split(",");
+    const itemsArr = JSON.parse(items);
     const index = itemsArr.indexOf(value);
     itemsArr.splice(index, 1);
-    await setItem(itemsArr.join());
-    setItems(itemsArr);
+    await setItem(JSON.stringify(itemsArr));
+    setItemsState(itemsArr);
   };
 
   const clearAll = async () => {
     await setItem("");
+    setItemsState([]);
     console.log("Done.");
   };
 
   useEffect(() => {
     readItemFromStorage();
   }, []);
+
+  const _keyExtractor = val => val;
 
   return (
     <ScrollView
@@ -76,19 +80,17 @@ export default function ToBuyScreen() {
       <SwipeListView
         data={items}
         key="swipe-list"
+        keyExtractor={_keyExtractor}
         renderItem={(data, rowMap) =>
-          <View key={data.item} style={styles.rowFront}>
-            <View>
-              <Text>
-                {data.item}
-              </Text>
-            </View>
+          <View style={styles.rowFront}>
+            <Text>
+              {data.item}
+            </Text>
           </View>}
         renderHiddenItem={(data, rowMap) =>
           <View style={{ width: "75px" }}>
             <Button
               title="delete"
-              key={`delete-${data.item}`}
               onPress={() => {
                 console.log("delete", data.item);
                 removeItemInStorage(data.item);
