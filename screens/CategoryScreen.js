@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-community/async-storage";
 import { View, Text } from "react-native";
-import { CATEGORIES } from "./constants";
 
 const parseTransactions = allTransactions => {
   if (!allTransactions) {
@@ -21,7 +20,7 @@ const parseTransactions = allTransactions => {
 
 const Item = ({ navigation, route }) => {
   const [expense, setExpenses] = useState(0);
-  const { key: categoryKey, objKey: categoryObjKey } = route.params;
+  const { key: categoryKey, name } = route.params;
 
   useEffect(
     () => {
@@ -39,7 +38,7 @@ const Item = ({ navigation, route }) => {
   return (
     <View>
       <Text>
-        {CATEGORIES[categoryObjKey].label}
+        {name}
       </Text>
       <Text>
         {expense}
