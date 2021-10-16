@@ -3,37 +3,44 @@ export const CATEGORIES = {
   fixedCharge: {
     key: "@fixedcharge",
     label: "Fixed Charge",
-    color: "rgb(155, 83, 95)"
+    color: "rgb(155, 83, 95)",
+    budget: 2500
   },
   dailyExpense: {
     key: "@dailyexpense",
     label: "Daily Expense",
-    color: "rgb(199, 186, 169)"
+    color: "rgb(199, 186, 169)",
+    budget: 600
   },
   studyInvest: {
     key: "@studyinvest",
     label: "Investment",
-    color: "rgb(219, 200, 815)"
+    color: "rgb(219, 200, 815)",
+    budget: 1000
   },
   clothes: {
     key: "@clothes",
     label: "Clothes",
-    color: "rgb(164, 122, 132)"
+    color: "rgb(164, 122, 132)",
+    budget: 300
   },
   entertainment: {
     key: "@entertainment",
     label: "Entertainment",
-    color: "rgb(249, 236, 219)"
+    color: "rgb(249, 236, 219)",
+    budget: 200
   },
   personalTies: {
     key: "@personalties",
     label: "Personal Ties",
-    color: "rgb(232, 210, 213)"
+    color: "rgb(232, 210, 213)",
+    budget: 400
   },
   bigItem: {
     key: "@bigitem",
     label: "Big Item",
-    color: "rgb(197, 199, 214)"
+    color: "rgb(197, 199, 214)",
+    budget: 8000
   },
   reimbursement: {
     key: "@reimbursement",

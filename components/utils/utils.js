@@ -16,9 +16,11 @@ export const loadData = async prevData => {
         0
       );
     }
+    console.log(entry);
     newExpense.push({
       name: entry.label,
       amount: total,
+      left: entry.budget,
       color: entry.color
     });
     if (
@@ -26,7 +28,8 @@ export const loadData = async prevData => {
       entry.key === CATEGORIES.otherIncome.key
     ) {
       gain += total;
-    } else {
+    } else if (entry.key !== CATEGORIES.reimbursement) {
+      // reimbursement does not go to difference calculation
       spend += total;
     }
   }

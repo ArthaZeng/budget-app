@@ -4,7 +4,6 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import { ScrollView } from "react-native-gesture-handler";
 import { loadData } from "../components/utils/utils";
-// import { CATEGORIES } from "./utils/constants";
 
 export default function HomeScreen() {
   const [data, setData] = useState([]);
@@ -47,9 +46,11 @@ export default function HomeScreen() {
           Save: ${saveMoney}
         </Text>
         {data.map(datum => {
+          console.log(datum);
           return (
             <Text key={datum.name}>
-              {datum.name}: {datum.amount}
+              {datum.name}: {datum.amount}{" "}
+              {datum.left && `, left ${datum.left}`}
             </Text>
           );
         })}

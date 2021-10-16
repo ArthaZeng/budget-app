@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-community/async-storage";
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 
 const parseTransactions = allTransactions => {
   if (!allTransactions) {
@@ -13,6 +13,7 @@ const parseTransactions = allTransactions => {
         <Text>
           {row[1]}: {row[0]}
         </Text>
+        <Button title="delete" onPress={() => {}} />
       </View>
     );
   });
